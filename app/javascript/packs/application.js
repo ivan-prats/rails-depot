@@ -15,3 +15,6 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+// Tailwind CSS
+// import "stylesheets/tailwindcss" // ADD THIS LINE
