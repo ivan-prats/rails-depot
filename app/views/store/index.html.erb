@@ -7,7 +7,8 @@
 <h1 class="mb-8 text-4xl leading-normal">Your pragmatic catalog</h1>
 
 <% @products.each do |product| %>
-<div class="mb-8 bg-white shadow overflow-hidden sm:rounded-lg">
+<div id="product-<%= product.id %>" data-semantic="product-card"
+  class="mb-8 bg-white shadow overflow-hidden sm:rounded-lg">
   <div class="px-4 py-5 sm:px-6 flex flex-col md:flex-row ">
     <div class="min-w-max-content">
       <%= image_tag(product.image_url, class:'mx-auto md:mx-0 w-full h-auto sm:h-64 sm:w-48 rounded-lg') %>
@@ -15,9 +16,9 @@
     <div class="mt-4 md:mt-0 md:ml-8">
       <div class="flex items-center">
         <h2 class="text-lg"><%= product.title %></h2>
-        <span
+        <span data-semantic="price"
           class="ml-auto inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800 whitespace-no-wrap">
-          <%= product.price %> €
+          <%= number_to_currency(product.price) %>
         </span>
       </div>
       <div class="mt-4 md:mt-8 leading-relaxed"><%= sanitize(product.description) %></div>
