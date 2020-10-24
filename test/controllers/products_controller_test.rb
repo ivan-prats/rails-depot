@@ -9,6 +9,12 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get products_url
     assert_response :success
+
+    assert_select 'main li[data-semantic="product"]', Product.count
+    assert_select "main #product-#{products(:one).id}", 1
+    assert_select "main #product-#{products(:ruby).id} h2", products(:ruby).title
+
+    assert_select "a[href='#{new_product_path}']", 1
   end
 
   test "should get new" do

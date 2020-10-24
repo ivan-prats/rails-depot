@@ -19,7 +19,7 @@
         <h2 class="text-lg"><%= product.title %></h2>
         <span data-semantic="price"
           class="ml-auto inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800 whitespace-no-wrap">
-          <%= number_to_currency(product.price) %>
+          <%= number_to_currency(product.price, unit: '€') %>
         </span>
       </div>
       <div class="mt-4 md:mt-8 leading-relaxed"><%= sanitize(product.description) %></div>

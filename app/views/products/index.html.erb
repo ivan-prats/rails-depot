@@ -10,7 +10,7 @@
 <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-md">
   <ul>
     <% @products.each do |product| %>
-    <li
+    <li data-semantic="product" id="product-<%= product.id %>"
       class="border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
       <div class="px-4 py-4 sm:px-6 flex items-stretch">
         <div class="w-48 h-48">
@@ -19,7 +19,7 @@
 
         <div class="mx-8">
           <div class="flex">
-            <h3 class="text-lg font-medium"><%= product.title %></h3>
+            <h2 class="text-lg font-medium"><%= product.title %></h2>
             <span class="ml-4 px-2 block text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
               <%= product.price %>€
             </span>
