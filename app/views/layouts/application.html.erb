@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Demo</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    
-    <%= stylesheet_pack_tag 'tailwindcss', 'data-turbolinks-track': 'reload' %>
+<head>
+  <title>Depot App</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-  </head>
+  <%= stylesheet_pack_tag 'tailwindcss', 'data-turbolinks-track': 'reload' %>
 
-  <body class="bg-gray-50">
-    <section class="container px-6 min-h-screen">
-      <%= yield %>
-    </section>
-  </body>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+</head>
+
+<body class="bg-gray-50">
+  <header class="mx-auto container flex flex-col sm:flex-row">
+    <%= image_tag 'logo.svg', alt: 'The Pragmatic Bookshelf', class:'h-16' %>
+    <nav class="sm:ml-4 lg:ml-12 flex items-center">
+      <ul class="mx-auto flex items-center">
+        <li class="mr-6"><a href="/">Home</a></li>
+        <li class="mr-6"><a href="/questions">FAQ</a></li>
+        <li class="mr-6"><a href="/news">News</a></li>
+        <li class="mr-6"><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="mx-auto container px-6 min-h-screen">
+    <%= yield %>
+  </section>
+</body>
+
 </html>
