@@ -2,42 +2,46 @@
 
 <h1 class="text-4xl leading-normal">Products</h1>
 
+<div class="mt-4">
+  <%= link_to 'New Product', new_product_path %>
+</div>
+
+
 <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-md">
   <ul>
     <% @products.each do |product| %>
-      <li class="border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
-        <div class="px-4 py-4 sm:px-6 flex items-stretch">
-          <div class="w-48 h-48">
-            <%= image_tag( product.image_url, class: 'w-full h-full object-cover') %>
+    <li
+      class="border-t border-gray-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+      <div class="px-4 py-4 sm:px-6 flex items-stretch">
+        <div class="w-48 h-48">
+          <%= image_tag( product.image_url, class: 'w-full h-full object-cover') %>
+        </div>
+
+        <div class="mx-8">
+          <div class="flex">
+            <h3 class="text-lg font-medium"><%= product.title %></h3>
+            <span class="ml-4 px-2 block text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              <%= product.price %>€
+            </span>
           </div>
 
-          <div class="mx-8">
-            <div class="flex">
-              <h3 class="text-lg font-medium"><%= product.title %></h3>
-              <span class="ml-4 px-2 block text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                <%= product.price %>€
-              </span>
-            </div>
-
-            <div class="mt-4 text-gray-600">
-              <%= truncate(strip_tags(product.description), length:80) %>
-            </div>
-          </div>
-
-
-          <div class="mx-4 flex flex-col">
-            <ul>
-              <li><%= link_to "Show", product %></li>
-              <li><%= link_to "Edit", edit_product_path(product) %></li>
-              <li><%= link_to "Destroy", product, method: :delete, data: {confirm: 'Are you sure?'} %></li>
-            </ul>
+          <div class="mt-4 text-gray-600">
+            <%= truncate(strip_tags(product.description), length:80) %>
           </div>
         </div>
-      </li>
+
+
+        <div class="mx-4 flex flex-col">
+          <ul>
+            <li><%= link_to "Show", product %></li>
+            <li><%= link_to "Edit", edit_product_path(product) %></li>
+            <li><%= link_to "Destroy", product, method: :delete, data: {confirm: 'Are you sure?'} %></li>
+          </ul>
+        </div>
+      </div>
+    </li>
     <% end %>
   </ul>
 </div>
 
 <br>
-
-<%= link_to 'New Product', new_product_path %>
