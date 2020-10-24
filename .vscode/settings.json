@@ -1,10 +1,19 @@
 {
+    "files.eol": "\n",
+    "files.associations": {
+        "*.html.erb": "html"
+    },
+
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true,
         "source.fixAll.prettier": true
     },
-    "eslint.validate": [
-        "javascript"
-    ],
-    "files.eol": "\n"
+
+    "solargraph.autoformat": true,
+    "solargraph.diagnostics": true,
+    "solargraph.formatting": true
 }
