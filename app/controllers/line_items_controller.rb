@@ -1,7 +1,7 @@
 class LineItemsController < ApplicationController
   include CurrentCart
   include StoreIndexCounter
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :show, :edit, :update, :destroy]
   before_action :reset_counter, only: [:create]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
@@ -34,7 +34,7 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully created.' }
+        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully added.', flash: {notice_type: 'success'} }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -62,7 +62,7 @@ class LineItemsController < ApplicationController
   def destroy
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_to line_items_url, notice: 'Line item was successfully destroyed.' }
+      format.html { redirect_to @cart, notice: 'Line item was successfully deleted', flash: {notice_type: 'success'} }
       format.json { head :no_content }
     end
   end

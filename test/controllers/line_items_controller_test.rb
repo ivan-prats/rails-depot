@@ -22,7 +22,7 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_select 'h2', 'Your Pragmatic Cart'
-    assert_select '#notice h3', 'Line item was successfully created.'
+    assert_select '#notice h3', 'Line item was successfully added.'
     assert_select '[data-semantic="line_item.product.title"]', products(:ruby).title
     assert_select '[data-semantic="line_item.quantity"]', "1"
     assert_select '[data-semantic="line_item.total_price"]', "€#{products(:ruby).price}0"
@@ -55,7 +55,9 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('LineItem.count', -1) do
       delete line_item_url(@line_item)
     end
+    assert_redirected_to cart_url(Cart.find(session[:cart_id]))
 
-    assert_redirected_to line_items_url
+    follow_redirect!
+    assert_select '[data-semantic-flash-notice_type="success"]', 1
   end
 end

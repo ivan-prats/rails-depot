@@ -47,6 +47,9 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to store_index_url
     assert_nil session[:cart_id]
+
+    follow_redirect!
+    assert_select '[data-semantic-flash-notice_type="success"]', 1
   end
 
   test "should not destroy a cart that is not the session[:cart_id]" do
