@@ -26,6 +26,14 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_select '[data-semantic="line_item.product.title"]', products(:ruby).title
   end
 
+  test "should reset store_counter when creating a line_item" do
+    get store_index_url 
+    assert session[:store_counter] == 1
+
+    post line_items_url, params: { product_id: products(:ruby).id }
+    assert session[:store_counter] == 0
+  end
+
   test "should show line_item" do
     get line_item_url(@line_item)
     assert_response :success
