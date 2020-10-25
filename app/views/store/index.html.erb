@@ -15,14 +15,17 @@
       <%= image_tag(product.image_url, class:'mx-auto md:mx-0 w-full h-auto sm:h-64 sm:w-48 rounded-lg') %>
     </div>
     <div class="mt-4 md:mt-0 md:ml-8">
-      <div class="flex items-center">
-        <h2 class="text-lg"><%= product.title %></h2>
+      <h2 class="text-lg"><%= product.title %></h2>
+      <div class="mt-4 md:mt-8 leading-relaxed"><%= sanitize(product.description) %></div>
+      <div class="mt-4 md:mt-8 w-full flex items-center justify-start md:justify-end">
         <span data-semantic="price"
           class="ml-auto inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800 whitespace-no-wrap">
           <%= number_to_currency(product.price, unit: '€') %>
         </span>
+        <div class="ml-4">
+          <%= button_to 'Add to Cart', line_items_path(product_id: product) %>
+        </div>
       </div>
-      <div class="mt-4 md:mt-8 leading-relaxed"><%= sanitize(product.description) %></div>
     </div>
   </div>
 </div>

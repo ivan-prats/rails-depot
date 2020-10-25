@@ -3,3 +3,11 @@
 @tailwind components;
 
 @tailwind utilities;
+
+input[type="submit"] {
+  @apply inline-flex items-center px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 transition ease-in-out duration-150 cursor-pointer;
+}
+
+input[type="submit"]:hover {
+  @apply bg-red-500;
+}
