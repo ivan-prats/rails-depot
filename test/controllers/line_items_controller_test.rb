@@ -25,7 +25,7 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_select '#notice h3', 'Line item was successfully created.'
     assert_select '[data-semantic="line_item.product.title"]', products(:ruby).title
     assert_select '[data-semantic="line_item.quantity"]', "1"
-    assert_select '[data-semantic="line_item.total_price"]', "#{products(:ruby).price}"
+    assert_select '[data-semantic="line_item.total_price"]', "€#{products(:ruby).price}0"
   end
 
   test "should reset store_counter when creating a line_item" do

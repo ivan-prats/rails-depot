@@ -28,14 +28,15 @@
     <tr>
       <td class="py-2"><span data-semantic="line_item.quantity"><%= item.quantity %></span> &times;</td>
       <td class="py-2 px-3" data-semantic="line_item.product.title"><%= item.product.title %></td>
-      <td class="py-2 px-3" data-semantic="line_item.total_price"><%= number_to_currency(item.total_price) %></td>
+      <td class="py-2 px-3" data-semantic="line_item.total_price"><%= number_to_currency(item.total_price, unit: '€') %>
+      </td>
     </tr>
     <% end %>
 
     <tfoot>
       <tr class="border-t border-0 border-black border-solid">
         <th class="py-2 px-3 text-right" colspan="2">Total:</th>
-        <td class="py-2 px-3"><%= number_to_currency(@cart.total_price) %></td>
+        <td class="py-2 px-3"><%= number_to_currency(@cart.total_price, unit: '€') %></td>
       </tr>
     </tfoot>
   </table>

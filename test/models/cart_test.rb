@@ -7,6 +7,7 @@ class CartTest < ActiveSupport::TestCase
 
     assert new_line_item.save
     assert new_line_item.quantity == 1
+    assert new_line_item.total_price == products(:ruby).price
     assert cart.line_items.size == 1
   end
 
@@ -19,5 +20,6 @@ class CartTest < ActiveSupport::TestCase
     reapated_line_item = cart.add_product products(:ruby)
     assert cart.line_items.size == 1
     assert reapated_line_item.quantity == 2
+    assert reapated_line_item.total_price == (products(:ruby).price * reapated_line_item.quantity)
   end
 end
