@@ -30,10 +30,7 @@ class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
 
-    # Option 1 : starting the LineItem through its @cart connection
-    @line_item = @cart.line_items.build(product: product)
-    # Option 2: starting LineItem from scratch
-    # @line_item = LineItem.new(cart: @cart, product: product)
+    @line_item = @cart.add_product(product)
 
     respond_to do |format|
       if @line_item.save

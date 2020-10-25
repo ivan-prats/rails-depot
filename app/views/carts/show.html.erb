@@ -23,7 +23,8 @@
 <h2 class="text-4xl leading-normal">Your Pragmatic Cart</h2>
 <ul class="mt-4 pl-8 list-disc">
   <% @cart.line_items.each do |item| %>
-  <li data-semantic="line_item.product.title"><%= item.product.title %> </li>
+  <li><span data-semantic="line_item.product.title"><%= item.product.title %></span> &times; <span
+      data-semantic="line_item.quantity"><%= item.quantity %></span></li>
   <% end %>
 </ul>
 
