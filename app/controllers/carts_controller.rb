@@ -30,6 +30,7 @@ class CartsController < ApplicationController
 
     respond_to do |format|
       if @cart.save
+        # session[:cart_id] = @cart.id
         format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
         format.json { render :show, status: :created, location: @cart }
       else

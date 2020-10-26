@@ -2,7 +2,10 @@ require 'test_helper'
 
 class LineItemsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @line_item = line_items(:one)
+    # We create and set a Cart with a :ruby product, this will be in the session
+    post line_items_url, params: { product_id: products(:one).id }
+    @cart = Cart.find(session[:cart_id])
+    @line_item = @cart.line_items.first
   end
 
   test "should get index" do
@@ -55,9 +58,19 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('LineItem.count', -1) do
       delete line_item_url(@line_item)
     end
-    assert_redirected_to cart_url(Cart.find(session[:cart_id]))
+    assert_redirected_to cart_url(@cart)
 
     follow_redirect!
     assert_select '[data-semantic-flash-notice_type="success"]', 1
   end
+
+  test "should not be able to delete a line_item in another user's cart" do
+    # We try deleting a LineItem that is not on our current session cart
+    assert_no_difference('LineItem.count') do
+      delete line_item_url(line_items(:one))
+    end
+    assert_redirected_to store_index_url 
+
+  end
+
 end
