@@ -55,7 +55,7 @@
           <%= number_to_currency(product.price, unit: '€') %>
         </span>
         <div class="ml-4">
-          <%= button_to 'Add to Cart', line_items_path(product_id: product) %>
+          <%= button_to 'Add to Cart', line_items_path(product_id: product), class: 'px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500' %>
         </div>
       </div>
     </div>
