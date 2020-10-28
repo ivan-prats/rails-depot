@@ -1,9 +1,9 @@
 class LineItemsController < ApplicationController
   include CurrentCart
   include StoreIndexCounter
-  before_action :set_cart, only: [:create, :show, :edit, :update, :destroy]
+  before_action :set_cart, only: %i[create show edit update destroy]
   before_action :reset_counter, only: [:create]
-  before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_line_item, only: %i[show edit update destroy]
 
   # GET /line_items
   # GET /line_items.json
@@ -13,8 +13,7 @@ class LineItemsController < ApplicationController
 
   # GET /line_items/1
   # GET /line_items/1.json
-  def show
-  end
+  def show; end
 
   # GET /line_items/new
   def new
@@ -22,19 +21,17 @@ class LineItemsController < ApplicationController
   end
 
   # GET /line_items/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /line_items
   # POST /line_items.json
   def create
     product = Product.find(params[:product_id])
-
     @line_item = @cart.add_product(product)
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully added.', flash: {notice_type: 'success'} }
+        format.html { redirect_to store_index_url, notice: 'Line item was successfully added.', flash: { notice_type: 'success' } }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -62,24 +59,25 @@ class LineItemsController < ApplicationController
   def destroy
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_to @cart, notice: 'Line item was successfully deleted', flash: {notice_type: 'success'} }
+      format.html { redirect_to @cart, notice: 'Line item was successfully deleted', flash: { notice_type: 'success' } }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_line_item
-      @line_item = LineItem.find(params[:id])
-      if @line_item.cart_id == @cart.id
-        @line_item
-      else
-        redirect_to store_index_url, notice: 'There was an error loading the Item', flash: { notice_type: 'error' }
-      end
-    end
 
-    # Only allow a list of trusted parameters through.
-    def line_item_params
-      params.require(:line_item).permit(:product_id)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_line_item
+    @line_item = LineItem.find(params[:id])
+    if @line_item.cart_id == @cart.id
+      @line_item
+    else
+      redirect_to store_index_url, notice: 'There was an error loading the Item', flash: { notice_type: 'error' }
     end
+  end
+
+  # Only allow a list of trusted parameters through.
+  def line_item_params
+    params.require(:line_item).permit(:product_id)
+  end
 end

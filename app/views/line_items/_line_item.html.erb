@@ -1,0 +1,10 @@
+<tr>
+  <td class="py-2"><span data-semantic="line_item.quantity"><%= line_item.quantity %></span> &times;</td>
+  <td class="py-2 px-3" data-semantic="line_item.product.title"><%= line_item.product.title %></td>
+  <td class="py-2 px-3" data-semantic="line_item.total_price">
+    <%= number_to_currency(line_item.total_price, unit: '€') %>
+  </td>
+  <td class="py-2 px-3">
+    <%= button_to('Take out', line_item, method: :delete, class: 'px-2 py-1 bg-red-100 hover:bg-red-200 text-red-800 text-xs rounded-md') %>
+  </td>
+</tr>

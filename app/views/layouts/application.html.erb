@@ -27,8 +27,15 @@
     </nav>
   </header>
 
-  <main class="mx-auto container px-6 min-h-screen">
-    <%= yield %>
+  <main class="container mx-auto px-6 min-h-screen lg:grid lg:grid-cols-10 lg:gap-x-10">
+    <div class="lg:col-span-7">
+      <%= yield %>
+    </div>
+    <% if @cart %>
+    <div id="cart" class="mt-4 lg:col-span-3">
+      <%= render @cart %>
+    </div>
+    <% end %>
   </main>
 </body>
 
