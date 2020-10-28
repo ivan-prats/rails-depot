@@ -31,13 +31,11 @@
     <div class="lg:col-span-7">
       <%= yield %>
     </div>
-    <% if @cart %>
     <div class="mt-4 lg:col-span-3">
       <div id="cart" class="lg:sticky lg:top-32">
-        <%= render @cart %>
+        <%= render_if @cart && @cart.line_items.any?, @cart %>
       </div>
     </div>
-    <% end %>
   </main>
 </body>
 
