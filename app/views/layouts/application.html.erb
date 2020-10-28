@@ -32,8 +32,10 @@
       <%= yield %>
     </div>
     <% if @cart %>
-    <div id="cart" class="mt-4 lg:col-span-3">
-      <%= render @cart %>
+    <div class="mt-4 lg:col-span-3">
+      <div id="cart" class="lg:sticky lg:top-32">
+        <%= render @cart %>
+      </div>
     </div>
     <% end %>
   </main>
