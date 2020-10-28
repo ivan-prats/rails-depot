@@ -72,6 +72,14 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_select '[data-semantic-flash-notice_type="success"]', 1
   end
 
+  test 'should destroy line_item via ajax' do
+    assert_difference('LineItem.count', -1) do
+      delete line_item_url(@line_item), xhr: true
+    end
+    assert_response :success
+    assert_no_match(/#{@line_item.product.title}/, @response.body)
+  end
+
   test "should not be able to delete a line_item in another user's cart" do
     # We try deleting a LineItem that is not on our current session cart
     assert_no_difference('LineItem.count') do

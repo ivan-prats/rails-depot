@@ -9,6 +9,6 @@
     <%= number_to_currency(line_item.total_price, unit: '€') %>
   </td>
   <td class="py-2 px-3">
-    <%= button_to('Take out', line_item, method: :delete, class: 'px-2 py-1 bg-red-100 hover:bg-red-200 text-red-800 text-xs rounded-md') %>
+    <%= button_to('Take out', line_item, method: :delete, remote: true, class: 'px-2 py-1 bg-red-100 hover:bg-red-200 text-red-800 text-xs rounded-md') %>
   </td>
 </tr>

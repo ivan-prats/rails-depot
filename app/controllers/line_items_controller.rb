@@ -63,6 +63,7 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @cart, notice: 'Line item was successfully deleted', flash: { notice_type: 'success' } }
       format.json { head :no_content }
+      format.js
     end
   end
 
