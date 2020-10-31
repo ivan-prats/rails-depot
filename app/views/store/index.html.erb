@@ -42,14 +42,14 @@
 <% cache product do %>
 <div id="product-<%= product.id %>" data-semantic="product-card"
   class="mt-8 mb-8 bg-white shadow overflow-hidden sm:rounded-lg">
-  <div class="px-4 py-5 sm:px-6 flex flex-col md:flex-row ">
+  <div class="px-4 py-5 sm:px-6 flex flex-col lg:flex-row">
     <div class="min-w-max-content">
-      <%= image_tag(product.image_url, class:'mx-auto md:mx-0 w-full h-auto sm:h-64 sm:w-48 rounded-lg') %>
+      <%= image_tag(product.image_url, class:'mx-auto lg:mx-0 w-full h-auto sm:h-64 sm:w-48 rounded-lg') %>
     </div>
-    <div class="mt-4 md:mt-0 md:ml-8">
+    <div class="mt-4 lg:mt-0 lg:ml-8">
       <h2 class="text-lg"><%= product.title %></h2>
-      <div class="mt-4 md:mt-8 leading-relaxed"><%= sanitize(product.description) %></div>
-      <div class="mt-4 md:mt-8 w-full flex items-center justify-end md:justify-start">
+      <div class="mt-4 lg:mt-8 leading-relaxed"><%= sanitize(product.description) %></div>
+      <div class="mt-4 lg:mt-8 w-full flex items-center justify-end lg:justify-start">
         <span data-semantic="price"
           class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-gray-100 text-gray-800 whitespace-no-wrap">
           <%= number_to_currency(product.price, unit: '€') %>
