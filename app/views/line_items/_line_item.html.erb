@@ -1,9 +1,12 @@
-<% if line_item == @current_item %>
-<tr class="line-item-highlight">
-  <% else %>
-<tr>
-  <% end %>
-  <td class="py-2"><span data-semantic="line_item.quantity"><%= line_item.quantity %></span> &times;</td>
+<tr id="line_item-<%= line_item.id %>" <% if line_item == @current_item %>class="line-item-highlight" <% end %>>
+  <td class="py-2 flex items-center">
+    <%= button_to [line_item, "line_item[quantity]": line_item.quantity - 1], method: :put, remote: true, class: "flex" do %>
+    <%= render "iccons/minus", classes: "w-4 h-4 hover:text-red-500" %>
+    <% end %>
+
+    <span data-semantic="line_item.quantity"><%= line_item.quantity %></span>
+    &times;
+  </td>
   <td class="py-2 px-3" data-semantic="line_item.product.title"><%= line_item.product.title %></td>
   <td class="py-2 px-3" data-semantic="line_item.total_price">
     <%= number_to_currency(line_item.total_price, unit: '€') %>

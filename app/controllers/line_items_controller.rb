@@ -45,14 +45,15 @@ class LineItemsController < ApplicationController
   # PATCH/PUT /line_items/1
   # PATCH/PUT /line_items/1.json
   def update
-    respond_to do |format|
-      if @line_item.update(line_item_params)
-        format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @line_item }
+    if @line_item.update(line_item_params)
+      if @line_item.quantity < 1
+        @line_item.destroy
+        line_item_respond_to('destroy')
       else
-        format.html { render :edit }
-        format.json { render json: @line_item.errors, status: :unprocessable_entity }
+        line_item_respond_to('update', true)
       end
+    else
+      line_item_respond_to('update', false)
     end
   end
 
@@ -60,11 +61,7 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1.json
   def destroy
     @line_item.destroy
-    respond_to do |format|
-      format.html { redirect_to @cart, notice: 'Line item was successfully deleted', flash: { notice_type: 'success' } }
-      format.json { head :no_content }
-      format.js
-    end
+    line_item_respond_to('destroy')
   end
 
   private
@@ -79,8 +76,33 @@ class LineItemsController < ApplicationController
     end
   end
 
+  def line_item_respond_to(method, is_success = true)
+    case method
+    when 'update'
+      if is_success
+        respond_to do |format|
+          format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
+          format.json { render :show, status: :ok, location: @line_item }
+          format.js { @current_item = @line_item }
+        end
+      else
+        respond_to do |format|
+          format.html { render :edit }
+          format.json { render json: @line_item.errors, status: :unprocessable_entity }
+        end
+      end
+
+    when 'destroy'
+      respond_to do |format|
+        format.html { redirect_to @cart, notice: 'Line item was successfully deleted', flash: { notice_type: 'success' } }
+        format.json { head :no_content }
+        format.js
+      end
+    end
+  end
+
   # Only allow a list of trusted parameters through.
   def line_item_params
-    params.require(:line_item).permit(:product_id)
+    params.require(:line_item).permit(:product_id, :quantity)
   end
 end

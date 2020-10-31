@@ -36,7 +36,7 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
       post line_items_url, params: { product_id: products(:ruby).id }, xhr: true
     end
     assert_response :success
-    assert_match(/<tr class=\\"line-item-highlight/, @response.body)
+    assert_match(/<tr id=\\"line_item-(\d*)\\"(\s*)class=\\"line-item-highlight/, @response.body)
   end
 
   test 'should reset store_counter when creating a line_item' do
@@ -60,6 +60,43 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
   test 'should update line_item' do
     patch line_item_url(@line_item), params: { line_item: { product_id: @line_item.product_id } }
     assert_redirected_to line_item_url(@line_item)
+  end
+
+  test 'should update line_item when increasing quantity' do
+    initial_quantity = @line_item.quantity
+    patch line_item_url(@line_item), params: { line_item: { product_id: @line_item.product_id, quantity: initial_quantity + 1 } }
+
+    @line_item = @cart.line_items.first
+    assert(@line_item.quantity == initial_quantity + 1)
+    assert_redirected_to line_item_url(@line_item)
+  end
+
+  test 'should destroy the line_item if updating quantity to 0' do
+    initial_line_item_id = @line_item.id
+    patch line_item_url(@line_item), params: { line_item: { quantity: 0 } }
+    assert_raises(ActiveRecord::RecordNotFound) do
+      LineItem.find(initial_line_item_id)
+    end
+  end
+  test 'should destroy the line_item if updating quantity to -1' do
+    initial_line_item_id = @line_item.id
+    patch line_item_url(@line_item), params: { line_item: { quantity: -1 } }
+    assert_raises(ActiveRecord::RecordNotFound) do
+      LineItem.find(initial_line_item_id)
+    end
+  end
+
+  test 'should update line_item via ajax' do
+    modified_quantity = 11_111
+    line_item_id = @line_item.id
+    put line_item_url(@line_item), params: { line_item: { quantity: modified_quantity } }, xhr: true
+
+    assert_response :success
+    assert_match(/<tr id=\\"line_item-#{@line_item.id}\\"(\s*)class=\\"line-item-highlight/, @response.body)
+    assert_match(/<span data-semantic=\\"line_item.quantity\\">#{modified_quantity}/, @response.body)
+
+    updated_line_item = LineItem.find(line_item_id)
+    assert_operator updated_line_item.total_price, :==, updated_line_item.product.price * modified_quantity
   end
 
   test 'should destroy line_item' do
