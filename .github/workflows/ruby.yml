@@ -58,7 +58,10 @@ jobs:
           yarn install --pure-lockfile
 
       - name: Run migrations
-        run: bin/rails db:migrate RAILS_ENV=test
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:migrate
 
       - name: Run tests
         run: bundle exec rake
