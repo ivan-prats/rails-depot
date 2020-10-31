@@ -5,5 +5,37 @@
 @tailwind utilities;
 
 input[type="submit"] {
-  @apply inline-flex items-center border border-transparent transition ease-in-out duration-150 cursor-pointer;
+  @apply transition ease-in-out duration-150 cursor-pointer;
+}
+
+form .field {
+  @apply mt-3;
+}
+
+form .field label {
+  @apply block text-sm font-medium leading-5 text-gray-700;
+}
+
+form .field input[type="text"] {
+  @apply mt-1 form-input block w-full sm:text-sm sm:leading-5;
+}
+
+form .field textarea {
+  @apply mt-1 form-textarea rounded-md block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5;
+}
+
+form .field select {
+  @apply mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5;
+}
+
+#error_explanation {
+  @apply rounded-md bg-red-50 p-4;
+}
+
+#error_explanation h2 {
+  @apply text-sm leading-5 font-medium text-red-800;
+}
+
+#error_explanation ul {
+  @apply mt-2 pl-5 text-sm leading-5 text-red-700 list-disc;
 }
