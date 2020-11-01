@@ -20,6 +20,10 @@ form .field input[type="text"] {
   @apply mt-1 form-input block w-full sm:text-sm sm:leading-5;
 }
 
+form .field input[type="password"] {
+  @apply mt-1 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5;
+}
+
 form .field textarea {
   @apply mt-1 form-textarea rounded-md block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5;
 }
