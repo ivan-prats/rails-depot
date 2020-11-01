@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: %i[new create]
 
-  before_action :redirect_if_empty_cart, only: [:new]
+  before_action :redirect_if_empty_cart, only: %i[new create]
 
   before_action :set_order, only: %i[show edit update destroy]
 
