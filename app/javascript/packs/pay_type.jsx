@@ -4,5 +4,6 @@ import PayTypeSelector from "PayTypeSelector";
 
 document.addEventListener("turbolinks:load", function () {
   var element = document.getElementById("pay-type-component");
-  ReactDOM.render(<PayTypeSelector />, element);
+
+  if (element) ReactDOM.render(<PayTypeSelector />, element);
 });

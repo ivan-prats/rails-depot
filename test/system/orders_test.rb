@@ -25,6 +25,71 @@ class OrdersTest < ApplicationSystemTestCase
     assert_text 'Thank you for your order!'
   end
 
+  test 'check extra inputs appear while Creating a Order, if Pay Type "Check" is selected' do
+    visit store_index_url
+    click_on 'Add to Cart', match: :first
+
+    click_on 'Checkout'
+
+    fill_in 'Address', with: @order.address
+    fill_in 'Email', with: @order.email
+    fill_in 'Name', with: @order.name
+
+    assert_no_selector '#order_routing_number'
+    assert_no_selector '#order_account_number'
+    select 'Check', from: 'Pay type'
+    assert_selector '#order_routing_number'
+    assert_selector '#order_account_number'
+
+    # Make sure the rest of inputs remain hidden
+    assert_no_selector '#order_po_number'
+    assert_no_selector '#order_credit_card_number'
+    assert_no_selector '#order_expiration_date'
+  end
+
+  test 'check extra inputs appear while Creating a Order, if Pay Type "Credit card" is selected' do
+    visit store_index_url
+    click_on 'Add to Cart', match: :first
+
+    click_on 'Checkout'
+
+    fill_in 'Address', with: @order.address
+    fill_in 'Email', with: @order.email
+    fill_in 'Name', with: @order.name
+
+    assert_no_selector '#order_credit_card_number'
+    assert_no_selector '#order_expiration_date'
+    select 'Credit card', from: 'Pay type'
+    assert_selector '#order_credit_card_number'
+    assert_selector '#order_expiration_date'
+
+    # Make sure the rest of inputs remain hidden
+    assert_no_selector '#order_po_number'
+    assert_no_selector '#order_routing_number'
+    assert_no_selector '#order_account_number'
+  end
+
+  test 'check extra inputs appear while Creating a Order, if Pay Type "Purchase order" is selected' do
+    visit store_index_url
+    click_on 'Add to Cart', match: :first
+
+    click_on 'Checkout'
+
+    fill_in 'Address', with: @order.address
+    fill_in 'Email', with: @order.email
+    fill_in 'Name', with: @order.name
+
+    assert_no_selector '#order_po_number'
+    select 'Purchase order', from: 'Pay type'
+    assert_selector '#order_po_number'
+
+    # Make sure the rest of inputs remain hidden
+    assert_no_selector '#order_credit_card_number'
+    assert_no_selector '#order_expiration_date'
+    assert_no_selector '#order_routing_number'
+    assert_no_selector '#order_account_number'
+  end
+
   # test 'updating a Order' do
   #   visit orders_url
   #   click_on 'Edit', match: :first
