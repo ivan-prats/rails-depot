@@ -35,7 +35,7 @@ class LineItemsController < ApplicationController
         format.js { @current_item = @line_item }
         format.json { render :show, status: :created, location: @line_item }
       else
-        format.js
+        format.js { redirect_to store_index_url, notice: "The item couldn't be added: #{@line_item.errors.full_messages}", flash: { notice_type: 'error' } }
         format.html { render :new }
         format.json { render json: @line_item.errors, status: :unprocessable_entity }
       end

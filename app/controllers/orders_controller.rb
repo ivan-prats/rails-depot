@@ -1,5 +1,10 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  include CurrentCart
+  before_action :set_cart, only: %i[new create]
+
+  before_action :redirect_if_empty_cart, only: %i[new create]
+
+  before_action :set_order, only: %i[show edit update destroy]
 
   # GET /orders
   # GET /orders.json
@@ -10,6 +15,10 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json { render :show, location: @order }
+    end
   end
 
   # GET /orders/new
@@ -18,17 +27,21 @@ class OrdersController < ApplicationController
   end
 
   # GET /orders/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /orders
   # POST /orders.json
   def create
     @order = Order.new(order_params)
 
+    @order.add_line_items_from_cart(@cart)
+
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        Cart.destroy(session[:cart_id])
+        session[:cart_id] = nil
+
+        format.html { redirect_to store_index_url, notice: 'Thank you for your order!', flash: { notice_type: 'success' } }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }
@@ -62,13 +75,32 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def order_params
-      params.require(:order).permit(:name, :address, :email, :pay_type)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def order_params
+    params.require(:order).permit(:name, :address, :email, :pay_type)
+  end
+
+  def pay_type_params
+    case order_params[:pay_type]
+    when 'Credit card'
+      params.require(:order).permit(:credit_card_number, :expiration_date)
+
+    when 'Check'
+      params.require(:order).permit(:routing_number, :account_number)
+
+    when 'Purchase order'
+      params.require(:order).permit(:po_number)
+
     end
+  end
+
+  def redirect_if_empty_cart
+    redirect_to store_index_url, notice: 'Your cart is empty' if @cart.line_items.empty?
+  end
 end

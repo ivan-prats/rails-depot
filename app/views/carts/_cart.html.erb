@@ -12,6 +12,8 @@
   </table>
 </div>
 
-<div class="mt-8">
-  <%= button_to 'Empty cart', cart, method: :delete, remote: true, data: {confirm: 'Are you sure?'}, class: 'px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500'  %>
+<div id="cart-actions" class="mt-8">
+  <%= button_to 'Empty cart', cart, method: :delete, remote: true, data: {confirm: 'Are you sure?'}, class: 'hide-on-orders px-2 py-1 text-sm leading-5 font-medium rounded-md text-red-800 bg-transparent border border-red-600 hover:bg-red-100'  %>
+
+  <%= button_to 'Checkout', new_order_path, method: :get, class: 'hide-on-orders mt-4 px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md shadow text-white bg-red-500 hover:bg-red-600' %>
 </div>
