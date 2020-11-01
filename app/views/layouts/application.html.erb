@@ -32,7 +32,7 @@
       <%= yield %>
     </main>
     <div class="mt-4 md:col-span-3">
-      <div id="cart" class="md:sticky md:top-32">
+      <div id="cart" class="<%= controller.controller_name %>-controller md:sticky md:top-32">
         <%= render_if @cart && @cart.line_items.any?, @cart %>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <tr id="line_item-<%= line_item.id %>" <% if line_item == @current_item %>class="line-item-highlight" <% end %>>
   <td class="py-2">
     <div class="flex items-center">
-      <%= button_to [line_item, "line_item[quantity]": line_item.quantity - 1], method: :put, remote: true, class: "flex" do %>
+      <%= button_to [line_item, "line_item[quantity]": line_item.quantity - 1], method: :put, remote: true, class: "hide-on-orders flex" do %>
       <%= render "iccons/minus", classes: "w-4 h-4 hover:text-red-500" %>
       <% end %>
 
@@ -15,7 +15,7 @@
   </td>
   <td class="py-2 px-3">
     <%# button_to('Take out', line_item, method: :delete, remote: true, class: 'px-2 py-1 bg-red-100 hover:bg-red-200 text-red-800 text-xs rounded-md') %>
-    <%= button_to [line_item], method: :delete, remote: true, class: 'flex' do %>
+    <%= button_to [line_item], method: :delete, remote: true, class: 'hide-on-orders flex' do %>
     <!-- Trash bin iccon -->
     <div>
       <svg class="px-2 py-2 w-8 h-8 text-red-500 transition duration-500 hover:bg-red-200 rounded-full"
