@@ -36,6 +36,19 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # More info on this config on the chapter "I.1" about Mailing,
+  # And I got the Gmail config
+  config.action_mailer.delivery_method = :test
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com"
+  #   port: 587
+  #   user_name:            <gmail_username>,
+  #   password:             <gmail_password>,
+  #   authentication:       "plain",
+  #   enable_starttls_auto: true
+  # }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

@@ -1,0 +1,11 @@
+<h3>Pragmatic order shipped</h3>
+
+<p>Hey! We just shipped your recent order:</p>
+
+<table>
+  <tr>
+    <th colspan="2">Item</th>
+    <th>Price</th>
+  </tr>
+  <%= render @order.line_items -%>
+</table>
