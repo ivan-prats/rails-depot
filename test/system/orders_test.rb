@@ -1,6 +1,8 @@
 require 'application_system_test_case'
 
 class OrdersTest < ApplicationSystemTestCase
+  include ActiveJob::TestHelper
+
   setup do
     @order = orders(:one)
   end
@@ -88,6 +90,47 @@ class OrdersTest < ApplicationSystemTestCase
     assert_no_selector '#order_expiration_date'
     assert_no_selector '#order_routing_number'
     assert_no_selector '#order_account_number'
+  end
+
+  test 'checkout process with "Check" pay_type' do
+    LineItem.delete_all
+    Order.delete_all
+    visit store_index_url
+
+    click_on 'Add to Cart', match: :first
+    click_on 'Checkout'
+
+    fill_in 'Address', with: 'Some randomass address'
+    fill_in 'Email', with: 'some@randomassemail.com'
+    fill_in 'Name', with: 'Some randomass name'
+
+    assert_no_selector '#order_routing_number'
+    assert_no_selector '#order_account_number'
+    select 'Check', from: 'Pay type'
+    assert_selector '#order_routing_number'
+    assert_selector '#order_account_number'
+
+    fill_in 'Routing #',	with: '123456'
+    fill_in 'Account #',	with: '987654'
+
+    perform_enqueued_jobs do
+      click_button 'Place Order'
+    end
+
+    orders = Order.all
+    assert_equal orders.size, 1
+
+    order = orders.first
+    assert_equal order.name, 'Some randomass name'
+    assert_equal order.address, 'Some randomass address'
+    assert_equal order.email, 'some@randomassemail.com'
+    assert_equal order.pay_type, 'Check'
+    assert_equal order.line_items.size, 1
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal ['some@randomassemail.com'], mail.to
+    assert_equal 'Ivan Ruby <ivanprats@hey.com>', mail[:from].value
+    assert_equal "Your Pragmatic order ##{order.id} confirmation", mail.subject
   end
 
   # test 'updating a Order' do
