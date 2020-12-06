@@ -1,19 +1,34 @@
 {
-    "files.eol": "\n",
-    "files.associations": {
-        "*.html.erb": "html"
-    },
+  "files.eol": "\n",
+  "files.associations": {
+    "*.html.erb": "erb"
+  },
 
-    "[html]": {
-        "editor.defaultFormatter": "vscode.html-language-features"
-    },
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
-        "source.fixAll.prettier": true
-    },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.prettier": true
+  },
 
-    "solargraph.autoformat": true,
-    "solargraph.diagnostics": true,
-    "solargraph.formatting": true
+  "solargraph.autoformat": true,
+  "solargraph.diagnostics": true,
+  "solargraph.formatting": true,
+
+  "liquid.format": false,
+
+  "ruby.useBundler": true, //run non-lint commands with bundle exec
+  "ruby.useLanguageServer": true, // use the internal language server (see below)
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true // enable rubocop via bundler
+    },
+    "reek": {
+      "useBundler": true // enable reek via bundler
+    }
+  },
+  "ruby.format": "rubocop", // use rubocop for formatting,
+  "ruby.codeCompletion": "rcodetools"
 }
