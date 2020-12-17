@@ -2,6 +2,8 @@ class StoreController < ApplicationController
   include StoreIndexCounter
   before_action :increment_counter, only: [:index]
 
+  skip_before_action :authorize
+
   include CurrentCart
   before_action :set_cart
 
